@@ -23,3 +23,15 @@ Existe la necesidad de una plataforma de pedidos en línea bajo un modelo de sus
 - Como cliente, quiero ver el menú del restaurante para elegir los productos que deseo comprar.
 - Como cliente, quiero agregar productos al carrito para realizar un pedido.
 - Como cliente, quiero recibir una confirmación de mi pedido para saber que fue recibido correctamente.
+## Core Features
+
+- Registro e inicio de sesión para administradores de restaurantes.
+- Administración del perfil del restaurante.
+- Administración del menú y productos.
+- Visualización del menú para clientes.
+- Carrito de compras.
+- Realización y confirmación de pedidos.
+- Gestión de pedidos por parte del restaurante.
+- Actualización del estado de los pedidos.
+- Plataforma multi-restaurante (cada restaurante administra únicamente su información).
+-Administración de planes de suscripción y pagos mensuales para los restaurantes.
