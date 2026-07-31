@@ -45,3 +45,10 @@ Las siguientes funcionalidades no estarán incluidas en la primera versión (MVP
 - Reportes financieros avanzados.
 - Desarrollo de aplicaciones móviles nativas para Android e iOS.
 - Integración con sistemas contables externos.
+## Success Criteria
+
+- Los restaurantes pueden registrarse y crear su cuenta en la plataforma.
+- Cada restaurante puede administrar su propio menú y productos de forma independiente.
+- Los clientes pueden visualizar el menú y realizar pedidos en línea.
+- Los restaurantes reciben y gestionan los pedidos en tiempo real.
+- La plataforma permite que múltiples restaurantes utilicen el sistema de manera independiente bajo un modelo de suscripción.
