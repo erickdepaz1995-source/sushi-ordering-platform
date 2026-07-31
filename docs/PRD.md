@@ -12,3 +12,14 @@ Existe la necesidad de una plataforma de pedidos en línea bajo un modelo de sus
 
 ### Secondary Users
 - Clientes que desean realizar pedidos en línea de forma rápida y sencilla desde el restaurante de su preferencia.
+## User Stories
+
+### Restaurant Administrator
+- Como administrador del restaurante, quiero crear y administrar mi menú para mantener actualizados los productos disponibles.
+- Como administrador del restaurante, quiero recibir los pedidos en tiempo real para preparar las órdenes rápidamente.
+- Como administrador del restaurante, quiero actualizar el estado de los pedidos para mantener informado al cliente.
+
+### Customer
+- Como cliente, quiero ver el menú del restaurante para elegir los productos que deseo comprar.
+- Como cliente, quiero agregar productos al carrito para realizar un pedido.
+- Como cliente, quiero recibir una confirmación de mi pedido para saber que fue recibido correctamente.
