@@ -34,4 +34,14 @@ Existe la necesidad de una plataforma de pedidos en línea bajo un modelo de sus
 - Gestión de pedidos por parte del restaurante.
 - Actualización del estado de los pedidos.
 - Plataforma multi-restaurante (cada restaurante administra únicamente su información).
--Administración de planes de suscripción y pagos mensuales para los restaurantes.
+- Administración de planes de suscripción y pagos mensuales para los restaurantes.
+## Out of Scope
+
+Las siguientes funcionalidades no estarán incluidas en la primera versión (MVP) de la plataforma:
+
+- Integración con servicios de entrega a domicilio de terceros.
+- Programa de fidelización o recompensas para clientes.
+- Facturación electrónica.
+- Reportes financieros avanzados.
+- Desarrollo de aplicaciones móviles nativas para Android e iOS.
+- Integración con sistemas contables externos.
