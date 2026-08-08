@@ -2,16 +2,49 @@
   {
     "id": 1,
     "name": "California Roll",
-    "price": 45.00
+    "price": 45.00,
+    "category": "Rollos clásicos",
+    "description": "Cangrejo, aguacate, pepino y ajonjolí tostado.",
+    "image": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": 2,
     "name": "Philadelphia Roll",
-    "price": 52.00
+    "price": 52.00,
+    "category": "Rollos clásicos",
+    "description": "Salmón fresco, queso crema, aguacate y cebollín.",
+    "image": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": 3,
     "name": "Salmon Nigiri",
-    "price": 38.00
+    "price": 38.00,
+    "category": "Nigiri",
+    "description": "Dos cortes de salmón fresco sobre arroz sazonado.",
+    "image": "https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 4,
+    "name": "Spicy Tuna Roll",
+    "price": 56.00,
+    "category": "Especialidades",
+    "description": "Atún, aguacate, pepino y nuestra salsa picante.",
+    "image": "https://images.unsplash.com/photo-1563612116625-3012372fccce?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 5,
+    "name": "Ebi Tempura Roll",
+    "price": 58.00,
+    "category": "Especialidades",
+    "description": "Camarón tempura, aguacate y salsa dulce de anguila.",
+    "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 6,
+    "name": "Gyozas de cerdo",
+    "price": 36.00,
+    "category": "Entradas",
+    "description": "Cinco dumplings dorados con salsa ponzu de la casa.",
+    "image": "https://images.unsplash.com/photo-1626776876729-bab4369a5a5a?auto=format&fit=crop&w=800&q=80"
   }
 ]

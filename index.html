@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Menú en línea de Nori House Sushi">
+  <title>Nori House | Sushi fresco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom" aria-label="Navegación principal">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio" aria-label="Nori House, inicio">
+        <span class="brand-mark" aria-hidden="true">の</span>
+        <span>Nori House</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="open-status d-none d-sm-inline-flex"><span></span> Abierto · hasta 10:00 pm</span>
+        <button class="cart-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-controls="cartPanel">
+          <span aria-hidden="true">🛍</span> Mi pedido
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-content">
+        <span class="eyebrow">Sushi preparado al momento</span>
+        <h1>Tu antojo favorito,<br><span>listo para ordenar.</span></h1>
+        <p>Rollos frescos, nigiris y combinaciones hechas con ingredientes seleccionados.</p>
+        <a class="btn btn-accent" href="#menu">Ver el menú <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Nuestro menú</span>
+            <h2>Elige algo delicioso</h2>
+          </div>
+          <p>Todos nuestros platillos se preparan al recibir tu pedido.</p>
+        </div>
+        <div class="category-list" id="categoryFilters" aria-label="Filtrar por categoría"></div>
+        <div class="row g-4" id="productGrid" aria-live="polite"></div>
+        <div class="loading-state" id="loadingState">
+          <div class="spinner-border" role="status"><span class="visually-hidden">Cargando menú</span></div>
+          <p>Cargando algo delicioso…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-strip">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4 info-item"><span>◷</span><div><strong>Listo en 25–35 min</strong><small>Preparamos al momento</small></div></div>
+          <div class="col-md-4 info-item"><span>✦</span><div><strong>Ingredientes frescos</strong><small>Calidad en cada bocado</small></div></div>
+          <div class="col-md-4 info-item"><span>⌖</span><div><strong>Recoge en restaurante</strong><small>Zona 10, Ciudad de Guatemala</small></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container d-flex flex-column flex-sm-row justify-content-between gap-2"><span>© 2026 Nori House</span><span>Hecho fresco. Servido con cariño.</span></div></footer>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel" aria-labelledby="cartTitle">
+    <div class="offcanvas-header">
+      <div><span class="eyebrow">Tu selección</span><h2 class="offcanvas-title" id="cartTitle">Mi pedido</h2></div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItems" class="cart-items flex-grow-1"></div>
+      <div id="cartSummary" class="cart-summary d-none">
+        <div class="d-flex justify-content-between"><span>Subtotal</span><strong id="cartTotal">Q0.00</strong></div>
+        <small>El pago se realiza al recoger tu pedido.</small>
+        <button class="btn btn-accent w-100" id="checkoutButton" type="button">Confirmar pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="orderToast" class="toast" role="status" aria-live="polite">
+      <div class="toast-body d-flex align-items-center gap-3"><span class="toast-check">✓</span><div><strong>¡Pedido recibido!</strong><div>Te avisaremos cuando esté listo.</div></div></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
