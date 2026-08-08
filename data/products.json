@@ -5,7 +5,7 @@
     "price": 45.00,
     "category": "Rollos clásicos",
     "description": "Cangrejo, aguacate, pepino y ajonjolí tostado.",
-    "image": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Un roll ligero y equilibrado, servido en ocho piezas.", "ingredients": "Cangrejo, aguacate, pepino, arroz, nori y ajonjolí."
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "price": 52.00,
     "category": "Rollos clásicos",
     "description": "Salmón fresco, queso crema, aguacate y cebollín.",
-    "image": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Una combinación cremosa y fresca, servida en ocho piezas.", "ingredients": "Salmón, queso crema, aguacate, cebollín, arroz y nori."
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "price": 38.00,
     "category": "Nigiri",
     "description": "Dos cortes de salmón fresco sobre arroz sazonado.",
-    "image": "https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Dos piezas de nigiri formadas a mano.", "ingredients": "Salmón fresco, arroz sazonado y wasabi."
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "price": 56.00,
     "category": "Especialidades",
     "description": "Atún, aguacate, pepino y nuestra salsa picante.",
-    "image": "https://images.unsplash.com/photo-1563612116625-3012372fccce?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1563612116625-3012372fccce?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Un roll intenso con un toque picante, servido en ocho piezas.", "ingredients": "Atún, aguacate, pepino, arroz, nori y salsa picante."
   },
   {
     "id": 5,
@@ -37,7 +37,7 @@
     "price": 58.00,
     "category": "Especialidades",
     "description": "Camarón tempura, aguacate y salsa dulce de anguila.",
-    "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Crujiente por dentro y suave por fuera, servido en ocho piezas.", "ingredients": "Camarón tempura, aguacate, arroz, nori y salsa de anguila."
   },
   {
     "id": 6,
@@ -45,6 +45,6 @@
     "price": 36.00,
     "category": "Entradas",
     "description": "Cinco dumplings dorados con salsa ponzu de la casa.",
-    "image": "https://images.unsplash.com/photo-1626776876729-bab4369a5a5a?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1626776876729-bab4369a5a5a?auto=format&fit=crop&w=800&q=80", "available": true, "details": "Cinco piezas selladas a la plancha hasta quedar doradas.", "ingredients": "Cerdo, repollo, cebollín, jengibre y salsa ponzu."
   }
 ]

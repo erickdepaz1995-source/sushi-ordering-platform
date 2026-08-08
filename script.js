@@ -1,76 +1,70 @@
-const state = { products: [], cart: new Map(), category: "Todos" };
+const state = { products: [], category: "Todos", loaded: false };
+const menuScreen = document.querySelector("#menuScreen");
+const detailScreen = document.querySelector("#detailScreen");
 const grid = document.querySelector("#productGrid");
 const filters = document.querySelector("#categoryFilters");
-const loading = document.querySelector("#loadingState");
-const cartItems = document.querySelector("#cartItems");
-const cartCount = document.querySelector("#cartCount");
-const cartTotal = document.querySelector("#cartTotal");
-const cartSummary = document.querySelector("#cartSummary");
+const menuState = document.querySelector("#menuState");
+const detail = document.querySelector("#productDetail");
 const money = value => `Q${Number(value).toFixed(2)}`;
 
 async function loadProducts() {
   try {
     const response = await fetch("data/products.json");
-    if (!response.ok) throw new Error("No fue posible cargar el menú.");
+    if (!response.ok) throw new Error();
     state.products = await response.json();
-    renderFilters();
-    renderProducts();
-  } catch (error) {
-    loading.innerHTML = `<p class="text-danger">${error.message} Ejecuta el sitio desde un servidor local.</p>`;
+    state.loaded = true;
+    renderFilters(); renderProducts(); route();
+  } catch {
+    state.loaded = true;
+    showMenuMessage("No products are available right now. Please check again soon.");
   }
 }
+
+function showMenuMessage(message) {
+  grid.innerHTML = ""; filters.innerHTML = "";
+  menuState.classList.remove("d-none");
+  menuState.innerHTML = `<div class="empty-state"><span aria-hidden="true">—</span><p>${message}</p></div>`;
+}
+
 function renderFilters() {
   const categories = ["Todos", ...new Set(state.products.map(product => product.category))];
-  filters.innerHTML = categories.map(category => `<button class="filter-btn ${category === state.category ? "active" : ""}" type="button" data-category="${category}">${category}</button>`).join("");
+  filters.innerHTML = categories.map(category => `<button class="filter-btn ${category === state.category ? "active" : ""}" type="button" data-category="${category}" aria-pressed="${category === state.category}">${category}</button>`).join("");
 }
+
 function renderProducts() {
-  const visible = state.category === "Todos" ? state.products : state.products.filter(product => product.category === state.category);
-  loading.classList.add("d-none");
-  grid.innerHTML = visible.map(product => `<article class="col-sm-6 col-lg-4"><div class="product-card"><div class="product-image-wrap"><img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><span class="product-tag">${product.category}</span></div><div class="product-body"><h3>${product.name}</h3><p class="product-description">${product.description}</p><div class="d-flex justify-content-between align-items-center"><span class="price">${money(product.price)}</span><button class="add-button" type="button" data-add="${product.id}" aria-label="Agregar ${product.name} al carrito">+</button></div></div></div></article>`).join("");
+  const products = state.products.filter(product => product.available !== false);
+  const visible = state.category === "Todos" ? products : products.filter(product => product.category === state.category);
+  if (!visible.length) return showMenuMessage("No products are available right now. Please check again soon.");
+  menuState.classList.add("d-none");
+  grid.innerHTML = visible.map(product => `<article class="col-sm-6 col-lg-4"><a class="product-card" href="#product/${product.id}" aria-label="Ver detalles de ${product.name}"><div class="product-image-wrap"><img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><span class="product-tag">${product.category}</span></div><div class="product-body"><div class="d-flex justify-content-between align-items-start gap-3"><h2>${product.name}</h2><span class="availability"><span></span> Disponible</span></div><p class="product-description">${product.description}</p><div class="d-flex justify-content-between align-items-center"><span class="price">${money(product.price)}</span><span class="view-detail">Ver detalles <span aria-hidden="true">→</span></span></div></div></a></article>`).join("");
 }
-function updateCart() {
-  const entries = [...state.cart.entries()];
-  cartCount.textContent = entries.reduce((sum, [, quantity]) => sum + quantity, 0);
-  if (!entries.length) {
-    cartItems.innerHTML = `<div class="cart-empty"><div><span>🛍</span><h3 class="mt-3">Tu pedido está vacío</h3><p>Agrega tus favoritos del menú.</p></div></div>`;
-    cartSummary.classList.add("d-none");
+
+function renderDetail(product) {
+  if (!product || product.available === false) {
+    detail.innerHTML = `<div class="detail-empty"><span class="eyebrow">Producto no disponible</span><h1 id="detailTitle">Este producto no está disponible</h1><p>This product is not available right now. Go back to the menu to explore other options.</p><a class="btn btn-accent" href="#menu">Volver al menú</a></div>`;
     return;
   }
-  let total = 0;
-  cartItems.innerHTML = entries.map(([id, quantity]) => {
-    const product = state.products.find(item => item.id === id);
-    total += product.price * quantity;
-    return `<div class="cart-item"><img src="${product.image}" alt=""><div><h3>${product.name}</h3><span class="cart-item-price">${money(product.price)}</span></div><div class="quantity-control"><button data-change="${id}" data-delta="-1" aria-label="Quitar uno">−</button><strong>${quantity}</strong><button data-change="${id}" data-delta="1" aria-label="Agregar uno">+</button></div></div>`;
-  }).join("");
-  cartTotal.textContent = money(total);
-  cartSummary.classList.remove("d-none");
+  detail.innerHTML = `<article class="detail-card"><div class="detail-image-wrap"><img src="${product.image}" alt="${product.name}"></div><div class="detail-content"><div class="d-flex flex-wrap gap-2 mb-3"><span class="detail-badge">${product.category}</span><span class="detail-badge availability-badge"><span></span> Disponible</span></div><h1 id="detailTitle">${product.name}</h1><p class="detail-description">${product.description}</p><div class="detail-price">${money(product.price)}</div><hr><h2>Detalles del producto</h2><p>${product.details}</p><h2>Ingredientes</h2><p>${product.ingredients}</p></div></article>`;
 }
+
+function route() {
+  if (!state.loaded) return;
+  const match = location.hash.match(/^#product\/(\d+)$/);
+  if (match) {
+    menuScreen.classList.add("d-none"); detailScreen.classList.remove("d-none");
+    renderDetail(state.products.find(product => product.id === Number(match[1])));
+    document.title = "Nori House | Detalle del producto";
+  } else {
+    detailScreen.classList.add("d-none"); menuScreen.classList.remove("d-none");
+    document.title = "Nori House | Menú";
+  }
+  window.scrollTo(0, 0);
+}
+
 filters.addEventListener("click", event => {
   const button = event.target.closest("[data-category]");
   if (!button) return;
-  state.category = button.dataset.category;
-  renderFilters(); renderProducts();
+  state.category = button.dataset.category; renderFilters(); renderProducts();
 });
-grid.addEventListener("click", event => {
-  const button = event.target.closest("[data-add]");
-  if (!button) return;
-  const id = Number(button.dataset.add);
-  state.cart.set(id, (state.cart.get(id) || 0) + 1);
-  updateCart(); button.textContent = "✓";
-  window.setTimeout(() => { button.textContent = "+"; }, 650);
-});
-cartItems.addEventListener("click", event => {
-  const button = event.target.closest("[data-change]");
-  if (!button) return;
-  const id = Number(button.dataset.change);
-  const next = state.cart.get(id) + Number(button.dataset.delta);
-  next > 0 ? state.cart.set(id, next) : state.cart.delete(id);
-  updateCart();
-});
-document.querySelector("#checkoutButton").addEventListener("click", () => {
-  state.cart.clear(); updateCart();
-  bootstrap.Offcanvas.getOrCreateInstance("#cartPanel").hide();
-  bootstrap.Toast.getOrCreateInstance("#orderToast", { delay: 4000 }).show();
-});
-updateCart();
+window.addEventListener("hashchange", route);
 loadProducts();
