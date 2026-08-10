@@ -117,24 +117,40 @@ Permitir administrar los productos del restaurante.
 # Screen 5 – Customer Menu
 
 ## Purpose
-Permitir que el cliente visualice el menú del restaurante.
+Permitir que el cliente visualice y explore el menú del restaurante.
 
 ## What the user sees
 - Categorías.
 - Productos.
 - Precio.
 - Fotografía.
-- Botón "Agregar al carrito".
+- Controles para filtrar los productos por categoría.
+- Acceso a la vista de detalle al seleccionar un producto.
+- En la vista de detalle: imagen, categoría, disponibilidad, nombre, descripción, precio, detalles e ingredientes.
+- Botón "Agregar al carrito" (trabajo futuro).
 
 ## Inputs
-- Selección de productos.
+- Selección de una categoría para filtrar el menú.
+- Selección de un producto para consultar su detalle.
+- Selección de productos para agregarlos al carrito (trabajo futuro).
 
 ## Outputs
-- Productos agregados al carrito.
+- Lista de productos filtrada por categoría.
+- Información detallada del producto seleccionado.
+- Productos agregados al carrito (trabajo futuro).
+
+## D2 Implementation Status
+- Implementado en D2: visualización del menú y de los productos disponibles.
+- Implementado en D2: filtrado de productos por categoría.
+- Implementado en D2: vista de detalle de producto con imagen, categoría, disponibilidad, nombre, descripción, precio, detalles e ingredientes.
+- Trabajo futuro: carrito de compras y confirmación de pedidos.
+- Trabajo futuro: inicio de sesión, registro, dashboard, administración del menú, administración de pedidos, suscripciones y demás funciones operativas descritas en este FRD.
 
 ## Edge Cases
 - Producto agotado.
 - Restaurante cerrado.
+- Categoría sin productos disponibles.
+- Producto seleccionado inexistente o no disponible.
 
 ---
 
