@@ -21,3 +21,10 @@ The current D2 prototype allows users to browse the menu, filter products by cat
 | Browse Menu | Must |
 | Online Ordering | Must |
 | Order Management | Must |
+### Live Product
+
+Nori House is deployed and available on Vercel:
+
+https://sushi-ordering-platform.vercel.app/
+
+The product includes the sushi menu, product navigation, and an order form connected to Supabase for saving customer orders.
