@@ -222,3 +222,27 @@ Permitir administrar la suscripción del restaurante.
 ## Edge Cases
 - Pago rechazado.
 - Tarjeta vencida.
+# Screen 9 - Order Form
+
+## What the user sees
+- Formulario para realizar un pedido.
+- Campo para ingresar el nombre del cliente.
+- Selección del estado del pedido.
+- Campo para indicar la hora.
+- Campo para ingresar los productos y cantidades.
+- Botón "Enviar pedido".
+- Mensaje de confirmación cuando el pedido se envía correctamente.
+
+## Inputs
+- Nombre del cliente.
+- Estado del pedido.
+- Hora.
+- Productos y cantidades.
+
+## Outputs
+- El pedido se guarda en la tabla `pedidos` de Supabase.
+- Se muestra un mensaje confirmando que el pedido fue enviado correctamente.
+
+## Navigation
+- La pantalla de pedidos es accesible desde el menú principal mediante el botón "Hacer un pedido".
+- El usuario puede regresar al menú principal.
