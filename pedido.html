@@ -61,12 +61,6 @@
     </section>
   </main>
   <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    const supabase = createClient(
-      "https://yqilxusgnttmatpvqbfq.supabase.co",
-      "sb_publishable_lGBgaHr6peJZf7Ap8JdoqA_7Hxpbni5"
-    );
     const form = document.querySelector("#pedido-form");
     const button = document.querySelector("#submit-button");
     const message = document.querySelector("#message");
@@ -87,8 +81,18 @@
       };
 
       try {
-        const { error } = await supabase.from("pedidos").insert(pedido);
-        if (error) throw error;
+        const response = await fetch("/api/pedidos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pedido)
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          const details = typeof result.error === "string"
+            ? result.error
+            : result.error?.message || JSON.stringify(result.error);
+          throw new Error(details || "No se pudo guardar el pedido");
+        }
         form.reset();
         message.textContent = "¡Gracias! Tu pedido fue enviado correctamente.";
         message.className = "message success";
