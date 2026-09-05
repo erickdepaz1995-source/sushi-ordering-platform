@@ -15,18 +15,26 @@
     body { margin: 0; min-height: 100vh; color: var(--ink); background: radial-gradient(circle at 12% 10%, rgba(217, 72, 59, .11), transparent 28rem), #f4f1eb; font-family: "Open Sans", sans-serif; }
     header { padding: 1.25rem max(1.5rem, calc((100% - 68rem) / 2)); border-bottom: 1px solid rgba(24, 32, 29, .1); background: rgba(255, 253, 250, .86); }
     .brand { color: var(--ink); font: 700 1.2rem "Poppins", sans-serif; text-decoration: none; }
-    .brand span { color: var(--accent); }
+    .brand span, .eyebrow { color: var(--accent); }
     main { display: grid; place-items: center; padding: 3rem 1.25rem; }
     .card { width: min(100%, 42rem); padding: clamp(1.5rem, 5vw, 3rem); border: 1px solid var(--line); border-radius: 1.25rem; background: var(--paper); box-shadow: 0 1.25rem 3rem rgba(35, 29, 24, .08); }
-    .eyebrow { margin: 0 0 .5rem; color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow { margin: 0 0 .5rem; font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     h1 { margin: 0; font: 700 clamp(2rem, 6vw, 3rem)/1.1 "Poppins", sans-serif; }
     .intro { margin: .75rem 0 2rem; color: var(--muted); }
-    form { display: grid; gap: 1.25rem; }
+    form, fieldset, .product-options { display: grid; gap: 1.25rem; }
     label { display: grid; gap: .45rem; font-weight: 700; }
-    input, select, textarea, button { font: inherit; }
-    input, select, textarea { width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .65rem; color: var(--ink); background: #fff; }
-    textarea { min-height: 8rem; resize: vertical; }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: 3px solid rgba(217, 72, 59, .14); }
+    input, button { font: inherit; }
+    input { width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .65rem; color: var(--ink); background: #fff; }
+    input:focus { border-color: var(--accent); outline: 3px solid rgba(217, 72, 59, .14); }
+    fieldset { margin: 0; padding: 0; border: 0; gap: .75rem; }
+    legend { margin-bottom: .25rem; font-weight: 700; }
+    .product-options { gap: .75rem; }
+    .product-option { display: grid; grid-template-columns: auto 1fr 5rem; align-items: center; gap: .75rem; padding: .8rem; border: 1px solid var(--line); border-radius: .65rem; }
+    .product-option input[type="checkbox"] { width: 1.2rem; height: 1.2rem; }
+    .product-option input[type="number"] { padding: .55rem; }
+    .product-name { font-weight: 700; }
+    .product-price { display: block; color: var(--muted); font-size: .9rem; font-weight: 400; }
+    .product-loading { color: var(--muted); font-weight: 400; }
     button { min-height: 3.25rem; border: 0; border-radius: .65rem; color: #fff; background: var(--accent); font-weight: 700; cursor: pointer; }
     button:hover { background: var(--accent-dark); }
     button:disabled { cursor: wait; opacity: .65; }
@@ -41,21 +49,16 @@
     <section class="card" aria-labelledby="page-title">
       <p class="eyebrow">Orden en línea</p>
       <h1 id="page-title">Haz tu pedido</h1>
-      <p class="intro">Completa los datos y enviaremos tu orden a cocina.</p>
+      <p class="intro">Selecciona tus productos. El folio, estado y hora se generan al confirmar.</p>
       <form id="pedido-form">
         <label for="cliente">Cliente
-          <input id="cliente" name="cliente" type="text" autocomplete="name" required>
+          <input id="cliente" name="cliente" type="text" autocomplete="name" maxlength="100" required>
         </label>
-        <label for="estado">Estado
-          <select id="estado" name="estado" required><option value="pendiente">Pendiente</option></select>
-        </label>
-        <label for="hora">Hora
-          <input id="hora" name="hora" type="time" required>
-        </label>
-        <label for="productos">Productos
-          <textarea id="productos" name="productos" placeholder="Escribe los productos y cantidades que deseas" required></textarea>
-        </label>
-        <button id="submit-button" type="submit">Enviar pedido</button>
+        <fieldset>
+          <legend>Productos</legend>
+          <div id="product-options" class="product-options product-loading" aria-live="polite">Cargando productos&hellip;</div>
+        </fieldset>
+        <button id="submit-button" type="submit" disabled>Confirmar pedido</button>
       </form>
       <p id="message" class="message" role="status" aria-live="polite"></p>
     </section>
@@ -64,46 +67,81 @@
     const form = document.querySelector("#pedido-form");
     const button = document.querySelector("#submit-button");
     const message = document.querySelector("#message");
+    const productOptions = document.querySelector("#product-options");
 
-    form.addEventListener("submit", async (event) => {
+    async function loadProducts() {
+      try {
+        const response = await fetch("data/products.json");
+        if (!response.ok) throw new Error("No se pudo cargar el menú");
+        const products = (await response.json()).filter(product => product.available !== false);
+        productOptions.classList.remove("product-loading");
+        productOptions.innerHTML = products.map(product => `
+          <label class="product-option">
+            <input type="checkbox" name="producto" value="${product.id}" data-name="${product.name}">
+            <span class="product-name">${product.name}<span class="product-price">Q${Number(product.price).toFixed(2)}</span></span>
+            <input type="number" name="cantidad-${product.id}" value="1" min="1" max="20" aria-label="Cantidad de ${product.name}" disabled>
+          </label>
+        `).join("");
+        button.disabled = false;
+      } catch (error) {
+        productOptions.textContent = error.message;
+        message.textContent = "Regresa al menú e intenta nuevamente.";
+        message.className = "message error";
+      }
+    }
+
+    productOptions.addEventListener("change", event => {
+      if (!event.target.matches('input[type="checkbox"]')) return;
+      const quantity = event.target.closest(".product-option").querySelector('input[type="number"]');
+      quantity.disabled = !event.target.checked;
+      if (event.target.checked) quantity.focus();
+    });
+
+    form.addEventListener("submit", async event => {
       event.preventDefault();
-      button.disabled = true;
-      button.textContent = "Enviando…";
       message.className = "message";
       message.textContent = "";
 
-      const formData = new FormData(form);
-      const pedido = {
-        cliente: formData.get("cliente"),
-        estado: formData.get("estado"),
-        hora: formData.get("hora"),
-        productos: formData.get("productos")
-      };
+      const selectedProducts = [...form.querySelectorAll('input[name="producto"]:checked')]
+        .map(input => ({
+          nombre: input.dataset.name,
+          cantidad: Number(form.elements[`cantidad-${input.value}`].value)
+        }));
+
+      if (!selectedProducts.length) {
+        message.textContent = "Selecciona al menos un producto.";
+        message.className = "message error";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Enviando…";
 
       try {
         const response = await fetch("/api/pedidos", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(pedido)
+          body: JSON.stringify({ cliente: new FormData(form).get("cliente"), productos: selectedProducts })
         });
         const result = await response.json();
         if (!response.ok) {
-          const details = typeof result.error === "string"
-            ? result.error
-            : result.error?.message || JSON.stringify(result.error);
+          const details = typeof result.error === "string" ? result.error : result.error?.message || JSON.stringify(result.error);
           throw new Error(details || "No se pudo guardar el pedido");
         }
         form.reset();
-        message.textContent = "¡Gracias! Tu pedido fue enviado correctamente.";
+        form.querySelectorAll('input[type="number"]').forEach(input => { input.disabled = true; });
+        message.textContent = `¡Pedido confirmado! Folio: ${result.folio}. Estado: ${result.estado}.`;
         message.className = "message success";
       } catch (error) {
         message.textContent = `No se pudo guardar el pedido: ${error.message || String(error)}`;
         message.className = "message error";
       } finally {
         button.disabled = false;
-        button.textContent = "Enviar pedido";
+        button.textContent = "Confirmar pedido";
       }
     });
+
+    loadProducts();
   </script>
 </body>
 </html>
